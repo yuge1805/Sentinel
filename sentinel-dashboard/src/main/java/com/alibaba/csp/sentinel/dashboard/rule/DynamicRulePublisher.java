@@ -15,6 +15,10 @@
  */
 package com.alibaba.csp.sentinel.dashboard.rule;
 
+import com.alibaba.csp.sentinel.dashboard.enums.RuleTypeEnum;
+
+import java.util.List;
+
 /**
  * @author Eric Zhao
  * @since 1.4.0
@@ -28,5 +32,16 @@ public interface DynamicRulePublisher<T> {
      * @param rules list of rules to push
      * @throws Exception if some error occurs
      */
-    void publish(String app, T rules) throws Exception;
+    void publish(String app, List<T> rules) throws Exception;
+
+    /**
+     * Whether this type of rule can be processed
+     *
+     * @param ruleType
+     * @return
+     */
+    default boolean isSupport(RuleTypeEnum ruleType) {
+        throw new IllegalStateException("Not implemented");
+    }
+
 }

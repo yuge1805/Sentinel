@@ -29,7 +29,7 @@ import org.springframework.util.CollectionUtils;
 import java.util.List;
 
 @Component("flowRuleZookeeperPublisher")
-public class FlowRuleZookeeperPublisher implements DynamicRulePublisher<List<FlowRuleEntity>> {
+public class FlowRuleZookeeperPublisher implements DynamicRulePublisher<FlowRuleEntity> {
     @Autowired
     private CuratorFramework zkClient;
     @Autowired

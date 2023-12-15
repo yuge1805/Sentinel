@@ -27,7 +27,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component("flowRuleZookeeperProvider")
-public class FlowRuleZookeeperProvider implements DynamicRuleProvider<List<FlowRuleEntity>> {
+public class FlowRuleZookeeperProvider implements DynamicRuleProvider<FlowRuleEntity> {
 
     @Autowired
     private CuratorFramework zkClient;

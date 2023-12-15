@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.alibaba.csp.sentinel.dashboard.rule;
+package com.alibaba.csp.sentinel.dashboard.rule.direct;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,6 +22,7 @@ import java.util.stream.Collectors;
 import com.alibaba.csp.sentinel.dashboard.client.SentinelApiClient;
 import com.alibaba.csp.sentinel.dashboard.discovery.AppManagement;
 import com.alibaba.csp.sentinel.dashboard.discovery.MachineInfo;
+import com.alibaba.csp.sentinel.dashboard.rule.DynamicRuleProvider;
 import com.alibaba.csp.sentinel.util.StringUtil;
 
 import com.alibaba.csp.sentinel.dashboard.datasource.entity.rule.FlowRuleEntity;
@@ -33,7 +34,7 @@ import org.springframework.stereotype.Component;
  * @author Eric Zhao
  */
 @Component("flowRuleDefaultProvider")
-public class FlowRuleApiProvider implements DynamicRuleProvider<List<FlowRuleEntity>> {
+public class FlowRuleApiProvider implements DynamicRuleProvider<FlowRuleEntity> {
 
     @Autowired
     private SentinelApiClient sentinelApiClient;

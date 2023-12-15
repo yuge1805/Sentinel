@@ -15,37 +15,35 @@
  */
 package com.alibaba.csp.sentinel.dashboard.rule.nacos;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.alibaba.csp.sentinel.dashboard.datasource.entity.rule.FlowRuleEntity;
-import com.alibaba.csp.sentinel.dashboard.rule.DynamicRuleProvider;
+import com.alibaba.csp.sentinel.dashboard.enums.RuleTypeEnum;
 import com.alibaba.csp.sentinel.datasource.Converter;
-import com.alibaba.csp.sentinel.util.StringUtil;
 import com.alibaba.nacos.api.config.ConfigService;
-
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.stereotype.Component;
 
-/**
- * @author Eric Zhao
- * @since 1.4.0
- */
-@Component("flowRuleNacosProvider")
-public class FlowRuleNacosProvider implements DynamicRuleProvider<FlowRuleEntity> {
+import java.util.List;
 
-    @Autowired
-    private ConfigService configService;
-    @Autowired
-    private Converter<String, List<FlowRuleEntity>> converter;
+/**
+ * @author: yuge
+ * @date: 2023/12/15
+ **/
+@Component("flowRuleNacosProvider")
+@ConditionalOnBean(NacosConfiguration.class)
+public class FlowRuleNacosProvider extends AbstractRuleNacosProvider<FlowRuleEntity> {
+
+    public FlowRuleNacosProvider(ConfigService configService, Converter<String, List<FlowRuleEntity>> converter) {
+        super(configService, converter);
+    }
 
     @Override
-    public List<FlowRuleEntity> getRules(String appName) throws Exception {
-        String rules = configService.getConfig(appName + NacosConfigUtil.FLOW_DATA_ID_POSTFIX,
-            NacosConfigUtil.GROUP_ID, 3000);
-        if (StringUtil.isEmpty(rules)) {
-            return new ArrayList<>();
-        }
-        return converter.convert(rules);
+    String getDataId(String app) {
+        return app + NacosConfigUtil.FLOW_DATA_ID_POSTFIX;
     }
+
+    @Override
+    public boolean isSupport(RuleTypeEnum ruleType) {
+        return RuleTypeEnum.FLOW_RULE.equals(ruleType);
+    }
+
 }
